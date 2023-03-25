@@ -1,45 +1,43 @@
 package com.work.service;
 
 import com.work.entity.CurrentSession;
-import com.work.entity.Sprint;
-import com.work.entity.User;
+import com.work.entity.Task;
 import com.work.exception.LoginLogoutException;
 import com.work.exception.SprintException;
+import com.work.exception.TaskException;
 import com.work.exception.UserException;
 import com.work.repository.SessionRepo;
-import com.work.repository.SprintRepo;
-import com.work.repository.UserRepo;
+import com.work.repository.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SprintServImpl implements SprintServ{
+public class TaskServImpl implements TaskServ {
+
+    @Autowired
+    private TaskRepo tRepo;
 
     @Autowired
     private SessionRepo sRepo;
 
-    @Autowired
-    private SprintRepo sprintRepo;
 
     @Override
-    public Sprint addSprint(Sprint sprint,String otp) throws SprintException, UserException, LoginLogoutException {
-
-
+    public Task addTask(Task task, String otp) throws TaskException, UserException, LoginLogoutException {
         CurrentSession loginAdmin=sRepo.findByUuid(otp);
 
         if(loginAdmin==null)
             throw new LoginLogoutException("Admin Not Login in System or Provide valid AdminOTP");
 
         if(loginAdmin.getType().equalsIgnoreCase("Admin")){
-
-            Boolean bool = sprintRepo.findById(sprint.getSprintId()).isPresent();
+            Boolean bool = tRepo.findById(task.getTaskId()).isPresent();
 
             if(bool)
-                throw new SprintException("Sprint Already Exists..");
+                throw new TaskException("Task Already Exists..");
 
-            sprint.setDateTime(sprint.getDateTime());
-            sprint.setDepartment(sprint.getDepartment());
-            return sprintRepo.save(sprint);
+            task.setTaskName(task.getTaskName());
+            task.setTaskDetails(task.getTaskDetails());
+            task.setDuration(task.getDuration());
+            return tRepo.save(task);
         }else
             throw new UserException("Admin OTP not Valid");
     }

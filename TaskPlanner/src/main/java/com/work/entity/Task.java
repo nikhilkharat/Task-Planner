@@ -29,5 +29,5 @@ public class Task {
 
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
-    private List<User> users=new ArrayList<>();
+    private List<User> user=new ArrayList<>();
 }

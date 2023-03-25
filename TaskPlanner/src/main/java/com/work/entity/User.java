@@ -46,6 +46,6 @@ public class User {
     private List<Sprint>sprintList=new ArrayList<>();
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "users")
+    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "user")
     private List<Task>tasks=new ArrayList<>();
 }

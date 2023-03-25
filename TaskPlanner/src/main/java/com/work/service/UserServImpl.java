@@ -28,6 +28,7 @@ public class UserServImpl implements UserServ{
         user.setPassword(user.getPassword());
 
 
+
         User nUser=uRepo.save(user);
 
         return nUser;

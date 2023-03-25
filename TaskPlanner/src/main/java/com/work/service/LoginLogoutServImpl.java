@@ -32,7 +32,7 @@ public class LoginLogoutServImpl implements LoginLogoutServ{
         Optional<CurrentSession> validSessionOpt =  sRepo.findById(extUser.getUserId());
 
         if(validSessionOpt.isPresent()) {
-            throw new LoginLogoutException("Consumer already Logged In");
+            throw new LoginLogoutException("User already Logged In");
         }
 
         if(extUser.getPassword().equals(dto.getPassword())) {

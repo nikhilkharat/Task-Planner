@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface SessionRepo extends JpaRepository<CurrentSession,Integer> {
 
     public CurrentSession findByUuid(String uuid);
+
+
+
 }
