@@ -9,5 +9,5 @@ import com.work.exception.UserException;
 
 public interface TaskServ {
 
-    public Task addTask(Task task, String otp)throws TaskException, UserException, LoginLogoutException;
+    public Task addTask(Integer sprintId,Task task, String otp)throws TaskException, SprintException, LoginLogoutException;
 }

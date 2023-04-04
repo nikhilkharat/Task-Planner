@@ -36,4 +36,22 @@ public class GlobalExceptionHandler {
         ErrorDetails err=new ErrorDetails(LocalDateTime.now(),e.getMessage(),w.getDescription(false));
         return new ResponseEntity<ErrorDetails>(err,HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<ErrorDetails> userException(UserException e,WebRequest w){
+        ErrorDetails err=new ErrorDetails(LocalDateTime.now(),e.getMessage(),w.getDescription(false));
+        return new ResponseEntity<ErrorDetails>(err,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TaskException.class)
+    public ResponseEntity<ErrorDetails> taskException(TaskException e,WebRequest w){
+        ErrorDetails err=new ErrorDetails(LocalDateTime.now(),e.getMessage(),w.getDescription(false));
+        return new ResponseEntity<ErrorDetails>(err,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(SprintException.class)
+    public ResponseEntity<ErrorDetails> sprintException(SprintException e,WebRequest w){
+        ErrorDetails err=new ErrorDetails(LocalDateTime.now(),e.getMessage(),w.getDescription(false));
+        return new ResponseEntity<ErrorDetails>(err,HttpStatus.BAD_REQUEST);
+    }
 }

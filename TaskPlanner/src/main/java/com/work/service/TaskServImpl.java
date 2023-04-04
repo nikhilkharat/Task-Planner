@@ -1,15 +1,20 @@
 package com.work.service;
 
 import com.work.entity.CurrentSession;
+import com.work.entity.Sprint;
 import com.work.entity.Task;
+import com.work.entity.User;
 import com.work.exception.LoginLogoutException;
 import com.work.exception.SprintException;
 import com.work.exception.TaskException;
 import com.work.exception.UserException;
 import com.work.repository.SessionRepo;
+import com.work.repository.SprintRepo;
 import com.work.repository.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class TaskServImpl implements TaskServ {
@@ -20,25 +25,30 @@ public class TaskServImpl implements TaskServ {
     @Autowired
     private SessionRepo sRepo;
 
+    @Autowired
+    private SprintRepo sprintRepo;
 
     @Override
-    public Task addTask(Task task, String otp) throws TaskException, UserException, LoginLogoutException {
-        CurrentSession loginAdmin=sRepo.findByUuid(otp);
+    public Task addTask(Integer sprintId,Task task, String otp) throws TaskException, SprintException, LoginLogoutException {
+        CurrentSession login=sRepo.findByUuid(otp);
 
-        if(loginAdmin==null)
+        if(login==null)
             throw new LoginLogoutException("Admin Not Login in System or Provide valid AdminOTP");
+//
+        Sprint sprint=sprintRepo.findById(sprintId).orElseThrow(()-> new SprintException("No User Present with given Id"));
+        if(login.getType().equalsIgnoreCase("Admin")){
+            if(sprint.getTaskList().add(task)){
+                task.setTaskName(task.getTaskName());
+                task.setTaskDetails(task.getTaskDetails());
+                task.setSprint(sprint);
 
-        if(loginAdmin.getType().equalsIgnoreCase("Admin")){
-            Boolean bool = tRepo.findById(task.getTaskId()).isPresent();
+                Task newTask=tRepo.save(task);
+                return newTask;
+            }else{
+                throw new TaskException("Sprint Already Exist or ");
+            }
 
-            if(bool)
-                throw new TaskException("Task Already Exists..");
-
-            task.setTaskName(task.getTaskName());
-            task.setTaskDetails(task.getTaskDetails());
-            task.setDuration(task.getDuration());
-            return tRepo.save(task);
         }else
-            throw new UserException("Admin OTP not Valid");
+            throw new SprintException("Sprint not Exist");
     }
 }

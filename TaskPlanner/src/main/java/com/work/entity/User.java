@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,11 +23,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userId;
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "First name must not contain numbers or special characters")
-    private String firstName;
 
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "First name must not contain numbers or special characters")
-    private String lastName;
+    @Pattern(regexp = "^[a-z A-Z]+$", message = "fullName must not contain numbers or special characters")
+    private String fullName;
 
     @Size(min = 10, max = 10, message = "Mobile number must have 10 digits")
     @Digits(integer = 10, fraction = 0, message = "Mobile number must have 10 digits")
@@ -44,8 +43,4 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Sprint>sprintList=new ArrayList<>();
-
-    @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "user")
-    private List<Task>tasks=new ArrayList<>();
 }

@@ -1,10 +1,13 @@
 package com.work.service;
 
 import com.work.entity.User;
+import com.work.entity.UserTaskDto;
 import com.work.exception.UserException;
 import com.work.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServImpl implements UserServ{
@@ -19,13 +22,13 @@ public class UserServImpl implements UserServ{
         if (extUser != null)
             throw new UserException("User Exist in System");
 
-        user.setFirstName(user.getFirstName());
-        user.setLastName(user.getLastName());
-        user.setMobileNumber(user.getMobileNumber());
-        user.setEmail(user.getEmail());
-        user.setUserType(user.getUserType());
-        user.setGender(user.getGender());
-        user.setPassword(user.getPassword());
+
+//        user.setFullName(user.getFullName());
+//        user.setMobileNumber(user.getMobileNumber());
+//        user.setEmail(user.getEmail());
+//        user.setUserType(user.getUserType());
+//        user.setGender(user.getGender());
+//        user.setPassword(user.getPassword());
 
 
 
@@ -33,6 +36,16 @@ public class UserServImpl implements UserServ{
 
         return nUser;
     }
+
+//    @Override
+//    public List<UserTaskDto> findDetailsByName(String fullName) throws UserException {
+//
+//        List<UserTaskDto> taskDtoList=uRepo.findByFullName(fullName);
+//        if(taskDtoList.size()!=0){
+//            return taskDtoList;
+//        }
+//        throw new UserException("No User found by this fullname.");
+//    }
 
 
 }
